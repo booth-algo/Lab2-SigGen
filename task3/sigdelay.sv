@@ -26,7 +26,7 @@ counter addrCounter (
 
 ram2ports sineRom (
     .clk (clk),
-    .wr_addr (address), 
+    .wr_addr (address+offset), 
     .rd_addr (address), 
     .din (din),
     .dout (dout),

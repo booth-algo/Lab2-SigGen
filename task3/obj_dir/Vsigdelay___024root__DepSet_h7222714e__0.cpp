@@ -31,7 +31,8 @@ VL_INLINE_OPT void Vsigdelay___024root___sequent__TOP__0(Vsigdelay___024root* vl
             = vlSelf->din;
         __Vdlyvset__sigdelay__DOT__sineRom__DOT__ram_array__v0 = 1U;
         __Vdlyvdim0__sigdelay__DOT__sineRom__DOT__ram_array__v0 
-            = vlSelf->sigdelay__DOT__address;
+            = (0xffU & ((IData)(vlSelf->sigdelay__DOT__address) 
+                        + (IData)(vlSelf->offset)));
     }
     vlSelf->sigdelay__DOT__address = __Vdly__sigdelay__DOT__address;
     if (__Vdlyvset__sigdelay__DOT__sineRom__DOT__ram_array__v0) {

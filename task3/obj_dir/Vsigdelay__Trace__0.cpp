@@ -33,6 +33,8 @@ void Vsigdelay___024root__trace_chg_sub_0(Vsigdelay___024root* vlSelf, Verilated
     bufp->chgCData(oldp+7,(vlSelf->offset),8);
     bufp->chgCData(oldp+8,(vlSelf->dout),8);
     bufp->chgCData(oldp+9,(vlSelf->sigdelay__DOT__address),8);
+    bufp->chgCData(oldp+10,((0xffU & ((IData)(vlSelf->sigdelay__DOT__address) 
+                                      + (IData)(vlSelf->offset)))),8);
 }
 
 void Vsigdelay___024root__trace_cleanup(void* voidSelf, VerilatedVcd* /*unused*/) {

@@ -21,8 +21,8 @@ VL_ATTR_COLD void Vsigdelay___024root__trace_init_sub__TOP__0(Vsigdelay___024roo
     tracep->declBus(c+8,"offset", false,-1, 7,0);
     tracep->declBus(c+9,"dout", false,-1, 7,0);
     tracep->pushNamePrefix("sigdelay ");
-    tracep->declBus(c+11,"A_WIDTH", false,-1, 31,0);
-    tracep->declBus(c+11,"D_WIDTH", false,-1, 31,0);
+    tracep->declBus(c+12,"A_WIDTH", false,-1, 31,0);
+    tracep->declBus(c+12,"D_WIDTH", false,-1, 31,0);
     tracep->declBit(c+1,"clk", false,-1);
     tracep->declBit(c+2,"rst", false,-1);
     tracep->declBit(c+3,"en", false,-1);
@@ -34,7 +34,7 @@ VL_ATTR_COLD void Vsigdelay___024root__trace_init_sub__TOP__0(Vsigdelay___024roo
     tracep->declBus(c+9,"dout", false,-1, 7,0);
     tracep->declBus(c+10,"address", false,-1, 7,0);
     tracep->pushNamePrefix("addrCounter ");
-    tracep->declBus(c+11,"WIDTH", false,-1, 31,0);
+    tracep->declBus(c+12,"WIDTH", false,-1, 31,0);
     tracep->declBit(c+1,"clk", false,-1);
     tracep->declBit(c+2,"rst", false,-1);
     tracep->declBit(c+3,"en", false,-1);
@@ -42,12 +42,12 @@ VL_ATTR_COLD void Vsigdelay___024root__trace_init_sub__TOP__0(Vsigdelay___024roo
     tracep->declBus(c+10,"count", false,-1, 7,0);
     tracep->popNamePrefix(1);
     tracep->pushNamePrefix("sineRom ");
-    tracep->declBus(c+11,"ADDRESS_WIDTH", false,-1, 31,0);
-    tracep->declBus(c+11,"DATA_WIDTH", false,-1, 31,0);
+    tracep->declBus(c+12,"ADDRESS_WIDTH", false,-1, 31,0);
+    tracep->declBus(c+12,"DATA_WIDTH", false,-1, 31,0);
     tracep->declBit(c+1,"clk", false,-1);
     tracep->declBit(c+4,"wr_en", false,-1);
     tracep->declBit(c+5,"rd_en", false,-1);
-    tracep->declBus(c+10,"wr_addr", false,-1, 7,0);
+    tracep->declBus(c+11,"wr_addr", false,-1, 7,0);
     tracep->declBus(c+10,"rd_addr", false,-1, 7,0);
     tracep->declBus(c+7,"din", false,-1, 7,0);
     tracep->declBus(c+9,"dout", false,-1, 7,0);
@@ -104,5 +104,7 @@ VL_ATTR_COLD void Vsigdelay___024root__trace_full_sub_0(Vsigdelay___024root* vlS
     bufp->fullCData(oldp+8,(vlSelf->offset),8);
     bufp->fullCData(oldp+9,(vlSelf->dout),8);
     bufp->fullCData(oldp+10,(vlSelf->sigdelay__DOT__address),8);
-    bufp->fullIData(oldp+11,(8U),32);
+    bufp->fullCData(oldp+11,((0xffU & ((IData)(vlSelf->sigdelay__DOT__address) 
+                                       + (IData)(vlSelf->offset)))),8);
+    bufp->fullIData(oldp+12,(8U),32);
 }
