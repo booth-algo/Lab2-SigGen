@@ -22,13 +22,14 @@ int main(int argc, char **argv, char **env) {
 
     // init Vbuddy
     if (vbdOpen() != 1) return(-1);
-    vbdHeader("Lab 2 Task 1");
+    vbdHeader("Lab 2 Task 2");
 
     // init
     top->clk = 1;
     top->rst = 0;
     top->en = 1;
     top->incr = 1;
+    top->offset = 0;
 
     for (i=0; i<MAX_CYCLE; i++){
         // dump variables into VCD file and toggle clock
@@ -38,8 +39,10 @@ int main(int argc, char **argv, char **env) {
             top->eval ();
         }
 
-        top->incr = vbdValue();
-        vbdPlot(int (top->dout), 0, 255);
+        // top->incr = vbdValue();
+        top->offset = vbdValue();
+        vbdPlot(int (top->dout1), 0, 255);
+        vbdPlot(int (top->dout2), 0, 255);
         vbdCycle(i);
 
         // either simulation finished, or 'q' is pressed
