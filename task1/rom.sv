@@ -14,7 +14,7 @@ initial begin
         $readmemh("sinerom.mem", rom_array);
 end;
 
-always_ff @(posedge ck) 
+always_ff @(posedge clk) 
     // output is synchronous
     dout <= rom_array [addr];
     

@@ -3,8 +3,12 @@
 #include "verilated_vcd_c.h"
 #include "vbuddy.cpp"
 
+#define MAX_CYCLE 1000000
+#define ADDR_WIDTH 8
+#define ROM_SIZE 256
+
 int main(int argc, char **argv, char **env) {
-    int i; // Count number of clock cycle
+    int i; // Clock cycle count
     int clk; // module clock signal
 
     Verilated::commandArgs(argc, argv);
@@ -14,22 +18,19 @@ int main(int argc, char **argv, char **env) {
     Verilated::traceEverOn(true); // turn on signal tracing and tell Verilator to dump waveform data to counter.vcd
     VerilatedVcdC* tfp = new VerilatedVcdC;
     top->trace (tfp, 99);
-    tfp->open ("counter.vcd");
+    tfp->open ("sinegen.vcd");
 
     // init Vbuddy
     if (vbdOpen() != 1) return(-1);
-    vbdHeader("Lab 1: Counter");
-    vbdSetMode(1);
+    vbdHeader("Lab 2: Sinegen");
 
-    // initialize simulation inputs (top = top-level entity, only top-level signals are visible)
+    // init
     top->clk = 1;
-    top->rst = 1;
-    top->en = 0;
-    top->v = vbdValue();
+    top->rst = 0;
+    top->en = 1;
+    top->incr = 1;
 
-    // run simulation for many clock cycles
-    for (i=0; i<1000000; i++){
-
+    for (i=0; i<MAX_CYCLE; i++){
         // dump variables into VCD file and toggle clock
         for (clk=0; clk<2; clk++){
             tfp->dump (2*i+clk);       // unit is in ps
@@ -37,23 +38,13 @@ int main(int argc, char **argv, char **env) {
             top->eval ();
         }
 
-        // ++++ Send count value to Vbuddy
-        vbdHex(4, (int(top->bcd) >> 8) & 0xF);
-        vbdHex(3, (int(top->bcd) >> 4) & 0xF);
-        vbdHex(2, int(top->bcd) & 0xF);
+        top->incr = vbdValue();
+        vbdPlot(int (top->dout), 0, 255);
+        vbdCycle(i);
 
-        vbdCycle(i+1);
-        // vbdPlot(int(top->count), 0, 255);
-        // ---- end of Vbuddy output section
-
-        top->rst = (i<2);
-        // top->en = (i>4) && (i<=13 | i>=17);
-        top->en = vbdFlag();
-        top->v = vbdValue();
-
-            // either simulation finished, or 'q' is pressed
+        // either simulation finished, or 'q' is pressed
         if ((Verilated::gotFinish()) || (vbdGetkey()=='q')) 
-            exit(0);                // ... exit if finish OR 'q' pressed
+            exit(0);
             
     }
 
