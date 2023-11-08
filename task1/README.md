@@ -49,7 +49,8 @@ Note that in the code above, I used the incr signal to increment the counter by 
 Hence changing the rotary encoder changes the frequency. However, when the frequency is changed, the resolution of the output is worsened due to the sampled nature of the original wave.
 
 **Video Evidence**
-https://github.com/booth-algo/Lab2-SigGen/assets/107279223/a93104a1-4932-44ce-986b-a57c82d7473d
+https://github.com/booth-algo/Lab2-SigGen/assets/107279223/f7073bfd-70ed-4124-b0fb-5cd47f334fc4
+
 
 
 
