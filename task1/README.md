@@ -2,75 +2,53 @@
 
 **Creating the rom.sv file**
 
-In this step I had to create the rom.sv component:
+Firstly I created a `rom.sv` component:
 <img width="720" alt="image" src="https://user-images.githubusercontent.com/69715492/198234970-feee656b-5643-4f28-9d59-657c69658909.png">
 
-Structure of Code:
-* define parameters (ADDRESS_WIDTH and DATA_WIDTH). The reason we use parameters (which are like variables) is so that when we instantiate the module in code [rom sineRom(clk, 10, 12)] this would mean the ADDRESS_WIDTH and DATA_WIDTH would get overwritten with new values 10 and 12 respectively. This allows reusablity of modules (as opposed to using 8 and 8 throughout the code). 
-* define input and output (INPUTS: clock signal, address of ROM; OUTPUTS: data-value in ROM address). The notation [(ADDRESS_WIDTH-1):0] means the input should be in the form [(8-1):0] or [7:0].
-* (logic) used to define a binary signal (logic signal) which is a signal type (rather than datatype like int)
+Here are some details about the init of the ROM:
+![image](https://github.com/booth-algo/Lab2-SigGen/assets/107279223/9884b918-2718-45d0-bc9b-0f089f9a004c)
 
-<img width="720" alt="image" src="https://user-images.githubusercontent.com/69715492/198246790-f83e7f1c-627e-4ecf-9666-67acc7f96f0a.png">
+We can see that ROM needs to “programmed” or configured with original contents. In SystemVerilog, the `$readmemh(.)` function allows the ROM to be loaded with the contents stored in a file with numbers stored as hexadecimal code as shown in the slide.
 
-The $readmemh(.) function allows ROM to be loaded with contents stored in file "sinerom.mem". Thus the ROM is now filled with the following Hexadecimal numbers:
+For Lab 2, Task 1, `sinerom.mem` file contains 256 samples of a single cycle cosine values with a number ranging from 8’h00 to 8’hFF, generated from `sinegen.py`.
 
-<img width="400" alt="image" src="https://user-images.githubusercontent.com/69715492/198247560-c6c38718-7008-49e1-aef2-843babaa99e7.png">
+![image](https://github.com/booth-algo/Lab2-SigGen/assets/107279223/b3f3e2e9-db6a-4b91-b40d-267ef4047b83)
 
-The code is generated using sinegen.py
+**Creating sinegen.sv**
 
-<img width="800" alt="image" src="https://user-images.githubusercontent.com/69715492/198248009-4bb817bb-fd06-4ca7-902a-4bc554b688d2.png">
+Generation of a simple sinewave generator for `singegen.sv`:
+![image](https://github.com/booth-algo/Lab2-SigGen/assets/107279223/b2592e79-d7a0-42ee-825d-abb1e4b62984)
 
-Analysing the python code:
+![image](https://github.com/booth-algo/Lab2-SigGen/assets/107279223/f237efda-6817-4930-b878-4186e7e71ae1)
 
-<img width="800" alt="image" src="https://user-images.githubusercontent.com/69715492/198250772-b6f88b8d-76f4-441a-82f4-a685964e96aa.png">
+**Changing the testbench**
 
-**In Summary**
-* Python script (*sinegen.py*) used to generate values that plot a cosine function
-* The values are stored in *sinerom.mem*
-* Values are stored in *rom.sv* using the $readmemh(.) function
+![image](https://github.com/booth-algo/Lab2-SigGen/assets/107279223/fef1f55f-a8b2-45c1-b28c-50206679441d)
 
-## Step 2 ##
-In this step I created the sinegen.sv module:
+Changes were made to initialisation of the variables and the vbdPlot function. 
 
-<img width="600" alt="image" src="https://user-images.githubusercontent.com/69715492/198255686-a3d31f3f-cdbe-4a21-a903-a7fa1343ac10.png">
+**Changes to doit.sh file and testbench**
 
-Which produces the following module:
+Afterwards, I made some changes to the doit.sh file and also added an escape from the loop:
 
-<img width="600" alt="image" src="https://user-images.githubusercontent.com/69715492/198255894-6018ed82-1af5-4b69-ba98-56f43dc90a88.png">
+![image](https://github.com/booth-algo/Lab2-SigGen/assets/107279223/809fa136-e111-46aa-808f-ed6b85f0a9f1)
 
-How it works:
-* rst, en, clk work the same way for the original counter module. The difference is we need to add an increment input. The increment is what determines the frequency of the wave. Before our counter would increment by 1. Now it will increment by the amount we specify in the increment input
-* The output of the counter is the address input in the ROM
-* In this manner we are able to traverse through the ROM addresses using the counter. As the ROM contains the coordinates for a sinusoid, the dout of the ROM helps plot the sine wave
+![image](https://github.com/booth-algo/Lab2-SigGen/assets/107279223/10d04310-a558-417a-b425-c7d2e625ecb7)
 
-**How does the increment work?**
-The counter produces the address of the ROM, and the output is the sine (actually cosine) values. The frequency of the output sinewave is determined by incr[7:0]. 
+**CHALLENGE**
 
-This is because if we have a higher increment. This means the counter will traverse through the ROM addresses in a few number of cycles. (10, 20, 30...) vs (1,2,3...256), the first one takes a fewer number of cycles to reach the end. 
+Note that in the code above, I used the incr signal to increment the counter by an amount determined by vbdValue, as I directly modified the code from the task to include the challenge.
 
-In general the output sinewave frequency is:
+![image](https://github.com/booth-algo/Lab2-SigGen/assets/107279223/e0b13750-c0d1-49f2-99d9-4dedc32e20fb)
+![image](https://github.com/booth-algo/Lab2-SigGen/assets/107279223/85363f87-7a8b-48c6-ade3-e69c326e56cb)
+![image](https://github.com/booth-algo/Lab2-SigGen/assets/107279223/72bc8519-5502-45f1-af21-c6e313334bd7)
 
-<img width="188" alt="image" src="https://user-images.githubusercontent.com/69715492/198557510-2de31cb9-1288-4e6c-a671-c04070fa89b1.png">
+Hence changing the rotary encoder changes the frequency. However, when the frequency is changed, the resolution of the output is worsened due to the sampled nature of the original wave.
 
-The counter produces the address of the ROM, and the output is the sine (actually cosine) values. The frequency of the output sinewave is determined by incr[7:0]. 
+**Video Evidence**
 
-## Step 3 ##
 
-<img width="300" alt="image" src="https://user-images.githubusercontent.com/69715492/198558179-3cb1fdef-cf9b-40e3-bf51-dfa5a7187c35.png">
 
-[NEEDS ANNOTATION]
 
-**New Function Learned**\
-*vbdGetkey()*: used to check if a key has been pressed. 
 
-```
-//exits if 'q' key pressed
- if ((vbdGetkey()=='q')) 
-      exit(0); 
-```
 
-## Step 4 ##
-
-<img width="521" alt="image" src="https://user-images.githubusercontent.com/69715492/198871959-f0ce7d55-9c6d-4420-9920-ec51a8be6efa.png">
-
-I took the counter doit.sh file and replaced the word 'counter' with 'sinegen'. This worked because all the counter files and header files were aligned with the sinegen name.
