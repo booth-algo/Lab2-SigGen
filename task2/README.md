@@ -22,3 +22,7 @@ If you look at my `rom2ports.sv` `always_ff` above, you can see that I added an 
 
 This results in an offset delay being created:
 
+Video evidence:
+
+https://github.com/booth-algo/Lab2-SigGen/assets/107279223/a46ac13a-1b87-465b-aa36-f7c4cd3765d5
+
