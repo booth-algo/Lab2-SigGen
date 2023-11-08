@@ -3,9 +3,11 @@
 **Creating the rom.sv file**
 
 Firstly I created a `rom.sv` component:
+
 <img width="720" alt="image" src="https://user-images.githubusercontent.com/69715492/198234970-feee656b-5643-4f28-9d59-657c69658909.png">
 
 Here are some details about the init of the ROM:
+
 ![image](https://github.com/booth-algo/Lab2-SigGen/assets/107279223/9884b918-2718-45d0-bc9b-0f089f9a004c)
 
 We can see that ROM needs to “programmed” or configured with original contents. In SystemVerilog, the `$readmemh(.)` function allows the ROM to be loaded with the contents stored in a file with numbers stored as hexadecimal code as shown in the slide.
@@ -17,6 +19,7 @@ For Lab 2, Task 1, `sinerom.mem` file contains 256 samples of a single cycle cos
 **Creating sinegen.sv**
 
 Generation of a simple sinewave generator for `singegen.sv`:
+
 ![image](https://github.com/booth-algo/Lab2-SigGen/assets/107279223/b2592e79-d7a0-42ee-825d-abb1e4b62984)
 
 ![image](https://github.com/booth-algo/Lab2-SigGen/assets/107279223/f237efda-6817-4930-b878-4186e7e71ae1)
@@ -46,6 +49,9 @@ Note that in the code above, I used the incr signal to increment the counter by 
 Hence changing the rotary encoder changes the frequency. However, when the frequency is changed, the resolution of the output is worsened due to the sampled nature of the original wave.
 
 **Video Evidence**
+https://github.com/booth-algo/Lab2-SigGen/assets/107279223/a93104a1-4932-44ce-986b-a57c82d7473d
+
+
 
 
 
