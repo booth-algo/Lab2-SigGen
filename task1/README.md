@@ -51,6 +51,11 @@ Hence changing the rotary encoder changes the frequency. However, when the frequ
 **Video Evidence**
 https://github.com/booth-algo/Lab2-SigGen/assets/107279223/f7073bfd-70ed-4124-b0fb-5cd47f334fc4
 
+![image](https://github.com/booth-algo/Lab2-SigGen/assets/107279223/5e2f395e-eaaa-462d-ae3e-2642af151a6a)
+![image](https://github.com/booth-algo/Lab2-SigGen/assets/107279223/5554134c-288a-431a-bfaf-86767a5279cc)
+
+
+
 
 
 
